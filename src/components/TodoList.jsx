@@ -1,6 +1,17 @@
+import {useContext} from "react";
+import {TodoContext} from "../contexts/TodoContext";
+
 const TodoList = () => {
+  const {state, dispatch} = useContext(TodoContext)
   return (
-      <div>This is the TodoList Component.</div>
+      <div>
+        <div>This is the TodoList Component.</div>
+        {
+          state.map(todo => {
+            return <div>{todo.text}</div>
+          })
+        }
+      </div>
   );
 }
 
