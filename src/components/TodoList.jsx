@@ -26,7 +26,7 @@ const TodoList = () => {
 
     return (
         <div className={'todo-group'}>
-            <div>This is the TodoList Component.</div>
+            <div>Todo List</div>
             {
                 state.length === 0 ? (
                     <div>add some things you need to do today...</div>
