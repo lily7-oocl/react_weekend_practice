@@ -1,9 +1,10 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {TodoContext} from "../contexts/TodoContext";
 import './TodoList.css';
 
 const TodoList = () => {
     const {state, dispatch} = useContext(TodoContext)
+    const [inputText, setInputText] = useState('')
 
     function toggleDone(id) {
         const action = {type: 'DONE', id: id}
@@ -13,6 +14,14 @@ const TodoList = () => {
     function deleteTodo(id) {
         const action = {type: 'DELETE', id: id}
         dispatch(action)
+    }
+
+    function addTodo() {
+        if (inputText.trim()) {
+            const action = {type: 'ADD', text: inputText}
+            dispatch(action)
+            setInputText('')
+        }
     }
 
     return (
@@ -32,6 +41,16 @@ const TodoList = () => {
                     })
                 )
             }
+            <div className={'add-todo-div'}>
+                <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder="Enter a new todo..."
+                    className={'todo-input'}
+                />
+                <button onClick={addTodo} className={'add-button'}>Add</button>
+            </div>
         </div>
     )
 }
