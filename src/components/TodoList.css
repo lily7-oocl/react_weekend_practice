@@ -9,3 +9,14 @@
 .todo-group {
     justify-self: center;
 }
+
+.todo-div {
+    display: flex;
+    align-items: center;
+}
+
+.delete-button {
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 6px;
+}

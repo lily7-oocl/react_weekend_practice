@@ -21,9 +21,11 @@ const TodoList = () => {
             {
                 state.map(({text, done, id}) => {
                     console.log("render todo:", text, done)
-                    return <div className={`todo-item ${done ? 'done' : ''}`}>
-                        <span onClick={() => toggleDone(id)}>{text}</span>
-                        <button onClick={() => deleteTodo(id)}>Delete</button>
+                    return <div className={'todo-div'}>
+                        <div className={`todo-item ${done ? 'done' : ''}`}>
+                            <span onClick={() => toggleDone(id)}>{text}</span>
+                        </div>
+                        <button className={'delete-button'} onClick={() => deleteTodo(id)}>X</button>
                     </div>
 
                 })
