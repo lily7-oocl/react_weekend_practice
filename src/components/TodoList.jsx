@@ -19,19 +19,21 @@ const TodoList = () => {
         <div className={'todo-group'}>
             <div>This is the TodoList Component.</div>
             {
-                state.map(({text, done, id}) => {
-                    console.log("render todo:", text, done)
-                    return <div className={'todo-div'}>
-                        <div className={`todo-item ${done ? 'done' : ''}`}>
-                            <span onClick={() => toggleDone(id)}>{text}</span>
+                state.length === 0 ? (
+                    <div>add some things you need to do today...</div>
+                ) : (
+                    state.map(({text, done, id}) => {
+                        return <div key={id} className={'todo-div'}>
+                            <div className={`todo-item ${done ? 'done' : ''}`}>
+                                <span onClick={() => toggleDone(id)}>{text}</span>
+                            </div>
+                            <button className={'delete-button'} onClick={() => deleteTodo(id)}>X</button>
                         </div>
-                        <button className={'delete-button'} onClick={() => deleteTodo(id)}>X</button>
-                    </div>
-
-                })
+                    })
+                )
             }
         </div>
-    );
+    )
 }
 
 export default TodoList
