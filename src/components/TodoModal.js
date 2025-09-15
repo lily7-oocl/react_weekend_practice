@@ -3,10 +3,12 @@ import {updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {useContext, useState, useEffect} from "react";
 import {TodoContext} from "../contexts/TodoContext";
+import { useNavigate } from 'react-router-dom';
 
 export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingTodo}) => {
     const [editText, setEditText] = useState('');
     const {dispatch} = useContext(TodoContext)
+    const navigate = useNavigate();
 
     async function changeTextOfTodo() {
         if (editText.trim() && editingTodo) {

@@ -5,11 +5,14 @@ import {deleteTodos, getTodos, updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {TodoGenerator} from "./TodoGenerator";
 import {TodoModal} from "./TodoModal";
+import { useNavigate } from 'react-router-dom';
+
 
 const TodoList = () => {
     const {state, dispatch} = useContext(TodoContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingTodo, setEditingTodo] = useState(null);
+    const navigate = useNavigate();
 
     async function toggleDone(id) {
         const oldTodo = state.find(todo => todo.id === id)
