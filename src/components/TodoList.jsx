@@ -1,7 +1,7 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import {TodoContext} from "../contexts/TodoContext";
 import './TodoList.css';
-import {addTodos, deleteTodos, getTodos, updateTodos} from "../apis/api";
+import {getTodos, updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {TodoGenerator} from "./TodoGenerator";
 import {DeleteTodoButton} from "./DeleteTodoButton";
