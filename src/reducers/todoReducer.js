@@ -19,6 +19,8 @@ export const todoReducer = (state, action) => {
         case 'ADD':
             const newId = state.length > 0 ? Math.max(...state.map(todo => todo.id)) + 1 : 1;
             return [...state, {id: newId, text: action.text, done: false}];
+        case 'LOAD_TODOS':
+            return state = action.todos;
     }
     return state;
 };
