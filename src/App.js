@@ -2,6 +2,8 @@ import {useReducer} from "react";
 import './App.css';
 import {initialState, todoReducer} from "./reducers/todoReducer";
 import {createBrowserRouter, NavLink, Outlet, RouterProvider} from "react-router";
+import TodoList from "./components/TodoList";
+import {TodoContext} from "./contexts/TodoContext";
 
 
 function  DefaultLayout(){
@@ -28,10 +30,13 @@ const routes=[
         element: <DefaultLayout/>,
         children: [{
             path: '',
-            elements: <h1>Home Page</h1>,
+            element: <h1>Home Page</h1>,
         },{
             path: 'about',
-            elements: <h1>About us</h1>
+            element: <h1>About us</h1>
+        },{
+            path: 'todoList',
+            element: <TodoList/>
         }]
     }
 ]
@@ -42,10 +47,9 @@ function App() {
     const value = {state, dispatch};
     return (
         <div className="App">
-            <RouterProvider router={router}></RouterProvider>
-            {/*<TodoContext.Provider value={value}>*/}
-            {/*    <TodoList/>*/}
-            {/*</TodoContext.Provider>*/}
+            <TodoContext.Provider value={value}>
+                <RouterProvider router={router}></RouterProvider>
+            </TodoContext.Provider>
         </div>
     );
 }
