@@ -3,10 +3,11 @@ import {TodoContext} from "../contexts/TodoContext";
 import './TodoList.css';
 import {addTodos, deleteTodos, getTodos, updateTodos} from "../apis/api";
 import message from "antd/es/message";
+import {TodoGenerator} from "./TodoGenerator";
+import {DeleteTodoButton} from "./DeleteTodoButton";
 
 const TodoList = () => {
     const {state, dispatch} = useContext(TodoContext)
-    const [inputText, setInputText] = useState('')
 
     async function toggleDone(id) {
         const oldTodo = state.find(todo => todo.id === id)
@@ -16,22 +17,6 @@ const TodoList = () => {
         );
         const action = {type: 'DONE', id: id}
         dispatch(action)
-    }
-
-    async function deleteTodo(id) {
-        await deleteTodos(id).then(message.success('更改成功'));
-        const action = {type: 'DELETE', id: id}
-        dispatch(action)
-    }
-
-    async function addTodo() {
-        if (inputText.trim()) {
-            const todo = {text: inputText, done: false}
-            await addTodos(todo).then(message.success('更改成功'));
-            const action = {type: 'ADD', text: inputText}
-            dispatch(action)
-            setInputText('')
-        }
     }
 
     useEffect(() => {
@@ -52,21 +37,12 @@ const TodoList = () => {
                             <div className={`todo-item ${done ? 'done' : ''}`}>
                                 <span onClick={() => toggleDone(id)}>{text}</span>
                             </div>
-                            <button className={'delete-button'} onClick={() => deleteTodo(id)}>X</button>
+                            <DeleteTodoButton id={id}/>
                         </div>
                     })
                 )
             }
-            <div className={'add-todo-div'}>
-                <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Enter a new todo..."
-                    className={'todo-input'}
-                />
-                <button onClick={addTodo} className={'add-button'}>Add</button>
-            </div>
+            <TodoGenerator/>
         </div>
     )
 }
