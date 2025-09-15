@@ -14,17 +14,27 @@ const TodoList = () => {
     async function toggleDone(id) {
         const oldTodo = state.find(todo => todo.id === id)
         const newTodo = {...oldTodo, done: !oldTodo.done}
-        await updateTodos(id, newTodo).then(
-            message.success('更改成功')
-        );
-        const action = {type: 'DONE', id: id}
-        dispatch(action)
+        try {
+            await updateTodos(id, newTodo);
+            message.success('更改成功');
+            const action = {type: 'DONE', id: id}
+            dispatch(action)
+        } catch (error) {
+            message.error('更新失败');
+            navigate('/errorPage');
+        }
     }
 
     async function deleteTodo(id) {
-        await deleteTodos(id).then(message.success('更改成功'));
-        const action = {type: 'DELETE', id: id}
-        dispatch(action)
+        try {
+            await deleteTodos(id);
+            message.success('删除成功');
+            const action = {type: 'DELETE', id: id}
+            dispatch(action)
+        } catch (error) {
+            message.error('删除失败');
+            navigate('/errorPage');
+        }
     }
 
     useEffect(() => {

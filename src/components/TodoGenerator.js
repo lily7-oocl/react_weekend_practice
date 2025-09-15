@@ -11,10 +11,16 @@ export const TodoGenerator = () => {
     async function addTodo() {
         if (inputText.trim()) {
             const todo = {text: inputText, done: false}
-            await addTodos(todo).then(message.success('更改成功'));
-            const action = {type: 'ADD', text: inputText}
-            dispatch(action)
-            setInputText('')
+            try {
+                await addTodos(todo);
+                message.success('更改成功');
+                const action = {type: 'ADD', text: inputText}
+                dispatch(action)
+                setInputText('')
+            } catch (error) {
+                message.error('添加失败');
+                navigate('/errorPage');
+            }
         }
     }
     return (

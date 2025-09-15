@@ -11,11 +11,15 @@ export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingT
     async function changeTextOfTodo() {
         if (editText.trim() && editingTodo) {
             const updatedTodo = {...editingTodo, text: editText.trim()};
-            await updateTodos(editingTodo.id, updatedTodo).then(
-                message.success('更改成功')
-            );
-            dispatch({type: 'EDIT', id: editingTodo.id, text: editText.trim()});
-            handleCancel();
+            try {
+                await updateTodos(editingTodo.id, updatedTodo);
+                message.success('更改成功');
+                dispatch({type: 'EDIT', id: editingTodo.id, text: editText.trim()});
+                handleCancel();
+            } catch (error) {
+                message.error('更新失败');
+                navigate('/errorPage');
+            }
         }
     }
 

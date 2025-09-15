@@ -28,6 +28,12 @@ const routes = [
         }, {
             path: 'todoList/:key',
             element: <TodoDetail/>
+        }, {
+            path: 'errorPage',
+            element: <h1>Error Page</h1>
+        }, {
+            path: 'donePage',
+            element: <h1>Done Page</h1>
         }]
     }
 ]

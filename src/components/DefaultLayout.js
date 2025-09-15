@@ -1,7 +1,13 @@
 import {NavLink, Outlet} from "react-router";
 import {Layout, Menu} from "antd";
 import Content from "antd/es/layout/layout";
-import {HomeOutlined, MonitorOutlined, UnorderedListOutlined} from "@ant-design/icons";
+import {
+    CheckCircleOutlined,
+    ExclamationCircleOutlined,
+    HomeOutlined,
+    MonitorOutlined,
+    UnorderedListOutlined
+} from "@ant-design/icons";
 
 const items = [{
     label: <NavLink to={'/'}>Home</NavLink>,
@@ -15,6 +21,14 @@ const items = [{
     label: <NavLink to={'/about'}>About</NavLink>,
     key: 'about',
     icon: <MonitorOutlined/>
+}, {
+    label: <NavLink to={'/errorPage'}>ErrorPage</NavLink>,
+    key: 'errorPage',
+    icon: <ExclamationCircleOutlined />
+}, {
+    label: <NavLink to={'/donePage'}>DonePage</NavLink>,
+    key: 'donePage',
+    icon: <CheckCircleOutlined />
 }]
 
 export function DefaultLayout() {
