@@ -10,11 +10,13 @@ const {TextArea} = Input;
 
 export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingTodo}) => {
     const [editText, setEditText] = useState('');
+    const [loading, setLoading] = useState(false);
     const {dispatch} = useContext(TodoContext);
     const navigate = useNavigate();
 
     async function changeTextOfTodo() {
         if (editText.trim() && editingTodo) {
+            setLoading(true);
             const updatedTodo = {...editingTodo, text: editText.trim()};
             try {
                 await updateTodos(editingTodo.id, updatedTodo);
@@ -24,7 +26,11 @@ export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingT
             } catch (error) {
                 message.error('更新失败');
                 navigate('/errorPage');
+            } finally {
+                setLoading(false);
             }
+        } else {
+            message.warning('请输入有效的待办事项内容');
         }
     }
 
@@ -32,13 +38,37 @@ export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingT
         setIsModalOpen(false);
         setEditingTodo(null);
         setEditText('');
+        setLoading(false);
     }
+
+    // 处理 ESC 键关闭
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape' && isModalOpen) {
+                handleCancel();
+            }
+        };
+
+        if (isModalOpen) {
+            document.addEventListener('keydown', handleEscape);
+            return () => document.removeEventListener('keydown', handleEscape);
+        }
+    }, [isModalOpen]);
 
     useEffect(() => {
         if (editingTodo) {
             setEditText(editingTodo.text);
+        } else {
+            setEditText('');
         }
     }, [editingTodo]);
+
+    // 处理 Enter 键提交
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            changeTextOfTodo();
+        }
+    };
 
     return (
         <Modal
@@ -48,21 +78,28 @@ export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingT
             onCancel={handleCancel}
             okText="确认修改"
             cancelText="取消"
-            className={'todo-modal'}
+            className="todo-modal"
             centered
-            maskClosable={false}
-            width={480}
+            maskClosable={true}
+            keyboard={true}
+            width={460}
+            destroyOnClose={true}
+            confirmLoading={loading}
+            zIndex={1050}
+            getContainer={false}
         >
             <TextArea
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
-                placeholder="请输入待办事项内容..."
+                onKeyDown={handleKeyPress}
+                placeholder="请输入待办事项内容... (Ctrl+Enter 保存)"
                 rows={4}
-                className={'modal-textarea'}
+                className="modal-textarea"
                 maxLength={200}
                 showCount
                 autoFocus
+                disabled={loading}
             />
         </Modal>
-    )
-}
+    );
+};

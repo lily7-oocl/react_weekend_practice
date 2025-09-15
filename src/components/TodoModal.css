@@ -1,30 +1,54 @@
-/* 自定义 Modal 遮罩 */
+/* 修复 Modal 遮罩层 */
 .todo-modal .ant-modal-mask {
-    background: rgba(0, 0, 0, 0.25) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* Modal 主体样式 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal 容器优化 */
 .todo-modal .ant-modal-wrap {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .todo-modal .ant-modal {
-    top: 50%;
-    transform: translateY(-50%);
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    padding-bottom: 0 !important;
 }
 
+/* Modal 主体样式优化 */
 .todo-modal .ant-modal-content {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    border-radius: 24px !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(20px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
     overflow: hidden;
     position: relative;
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .todo-modal .ant-modal-content::before {
@@ -35,200 +59,179 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.02) 100%);
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 100%);
     pointer-events: none;
+    z-index: 0;
 }
 
-/* Modal 头部 */
+/* Modal 头部优化 */
 .todo-modal .ant-modal-header {
     background: transparent !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 24px 24px 0 0 !important;
-    padding: 24px 24px 20px 24px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 20px 24px 16px 24px !important;
     position: relative;
     z-index: 1;
 }
 
 .todo-modal .ant-modal-title {
     color: #333 !important;
-    font-weight: 600 !important;
+    font-weight: var(--font-weight-semibold) !important;
     font-size: 18px !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-family: var(--font-family-primary) !important;
+    letter-spacing: var(--letter-spacing-normal) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
+    margin: 0;
 }
 
-/* Modal 关闭按钮 */
+/* Modal 关闭按钮优化 */
 .todo-modal .ant-modal-close {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.3) !important;
     border-radius: 50% !important;
     width: 32px !important;
     height: 32px !important;
-    top: 16px !important;
-    right: 16px !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    top: 12px !important;
+    right: 12px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     transition: all 0.3s ease;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .todo-modal .ant-modal-close:hover {
     background: rgba(255, 99, 99, 0.2) !important;
-    border-color: rgba(255, 99, 99, 0.3) !important;
+    border-color: rgba(255, 99, 99, 0.4) !important;
     transform: scale(1.1);
 }
 
 .todo-modal .ant-modal-close-x {
-    color: #333 !important;
+    color: #666 !important;
     font-size: 14px !important;
-    line-height: 30px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Modal 内容区域 */
 .todo-modal .ant-modal-body {
-    padding: 8px 24px 24px 24px !important;
+    padding: 4px 24px 20px 24px !important;
     position: relative;
     z-index: 1;
 }
 
-/* TextArea 样式 */
+/* TextArea 样式优化 */
 .modal-textarea {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    backdrop-filter: blur(15px) saturate(150%);
-    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     border-radius: 12px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     color: #333 !important;
-    font-size: 14px !important;
-    position: relative;
-    overflow: hidden;
-}
-
-.modal-textarea::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%);
-    pointer-events: none;
+    font-size: 15px !important;
+    font-family: var(--font-family-primary) !important;
+    font-weight: var(--font-weight-normal) !important;
+    letter-spacing: var(--letter-spacing-normal) !important;
+    line-height: 1.5 !important;
+    resize: none !important;
 }
 
 .modal-textarea:focus,
 .modal-textarea:hover {
-    background: rgba(255, 255, 255, 0.28) !important;
-    border-color: rgba(102, 126, 234, 0.4) !important;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
-    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.55) !important;
+    border-color: rgba(102, 126, 234, 0.5) !important;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1) !important;
+    outline: none !important;
 }
 
 .modal-textarea::placeholder {
     color: rgba(51, 51, 51, 0.5) !important;
+    font-style: italic;
 }
 
-/* Modal 底部按钮 */
+/* Modal 底部按钮区域 */
 .todo-modal .ant-modal-footer {
     background: transparent !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-    padding: 16px 24px 24px 24px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 16px 24px 20px 24px !important;
     position: relative;
     z-index: 1;
     text-align: center;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
 }
 
+/* 按钮样式优化 */
 .todo-modal .ant-btn {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    background: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     border-radius: 12px !important;
-    font-weight: 500 !important;
+    font-weight: var(--font-weight-medium) !important;
+    font-family: var(--font-family-primary) !important;
+    letter-spacing: var(--letter-spacing-normal) !important;
     height: 40px !important;
     padding: 0 24px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.todo-modal .ant-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.02) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.todo-modal .ant-btn:hover::before {
-    opacity: 1;
+    cursor: pointer !important;
+    outline: none !important;
 }
 
 .todo-modal .ant-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 确认按钮 */
 .todo-modal .ant-btn-primary {
-    background: rgba(102, 126, 234, 0.25) !important;
-    border-color: rgba(102, 126, 234, 0.35) !important;
+    background: rgba(102, 126, 234, 0.2) !important;
+    border-color: rgba(102, 126, 234, 0.4) !important;
     color: #667eea !important;
+    font-weight: var(--font-weight-medium) !important;
 }
 
-.todo-modal .ant-btn-primary:hover {
-    background: rgba(102, 126, 234, 0.35) !important;
-    border-color: rgba(102, 126, 234, 0.45) !important;
+.todo-modal .ant-btn-primary:hover,
+.todo-modal .ant-btn-primary:focus {
+    background: rgba(102, 126, 234, 0.3) !important;
+    border-color: rgba(102, 126, 234, 0.5) !important;
     color: #667eea !important;
 }
 
 /* 取消按钮 */
 .todo-modal .ant-btn-default {
     color: #666 !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.todo-modal .ant-btn-default:hover {
+.todo-modal .ant-btn-default:hover,
+.todo-modal .ant-btn-default:focus {
     color: #333 !important;
-    border-color: rgba(255, 255, 255, 0.35) !important;
-}
-
-/* 动画效果 */
-.todo-modal.ant-modal {
-    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    background: rgba(255, 255, 255, 0.35) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
 }
 
 /* 响应式设计 */
 @media (max-width: 600px) {
     .todo-modal .ant-modal {
-        width: 95% !important;
+        width: 90% !important;
+        max-width: 400px !important;
         margin: 0 auto;
-    }
-
-    .todo-modal .ant-modal-content {
-        margin: 0 10px;
     }
 
     .todo-modal .ant-modal-header,
@@ -236,5 +239,19 @@
     .todo-modal .ant-modal-footer {
         padding-left: 16px !important;
         padding-right: 16px !important;
+    }
+
+    .todo-modal .ant-modal-title {
+        font-size: 16px !important;
+    }
+
+    .modal-textarea {
+        font-size: 14px !important;
+    }
+
+    .todo-modal .ant-btn {
+        height: 36px !important;
+        padding: 0 20px !important;
+        font-size: 14px !important;
     }
 }
