@@ -1,17 +1,22 @@
 import {NavLink, Outlet} from "react-router";
 import {Layout, Menu} from "antd";
 import Content from "antd/es/layout/layout";
+import {HomeOutlined, MonitorOutlined, UnorderedListOutlined} from "@ant-design/icons";
 
 const items = [{
     label: <NavLink to={'/'}>Home</NavLink>,
-    key: 'home'
+    key: 'home',
+    icon: <HomeOutlined/>
 }, {
     label: <NavLink to={'/todoList'}>Todo list</NavLink>,
-    key: 'todoList'
+    key: 'todoList',
+    icon: <UnorderedListOutlined/>
 }, {
     label: <NavLink to={'/about'}>About</NavLink>,
-    key: 'about'
+    key: 'about',
+    icon: <MonitorOutlined/>
 }]
+
 export function DefaultLayout() {
     return <>
         <Layout>
