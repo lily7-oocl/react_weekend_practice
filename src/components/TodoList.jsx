@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import {TodoGenerator} from "./TodoGenerator";
 import {TodoModal} from "./TodoModal";
 import {Card, Button, Empty, Typography} from "antd";
-import {EditOutlined, DeleteOutlined} from "@ant-design/icons";
+import {EditOutlined, DeleteOutlined, EyeOutlined} from "@ant-design/icons";
 
 const {Title} = Typography;
 
@@ -57,6 +57,11 @@ const TodoList = () => {
         setIsModalOpen(true);
     }
 
+    function viewDetail(id) {
+        console.log('点击查看详情，ID:', id); // 添加调试日志
+        navigate(`/todoList/${id}`);
+    }
+
     return (
         <div className={'todo-container'}>
             <Card className={'todo-card'}>
@@ -88,8 +93,21 @@ const TodoList = () => {
                                     <div className={'todo-actions'}>
                                         <Button
                                             type="text"
+                                            icon={<EyeOutlined />}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                console.log('按钮被点击，ID:', id);
+                                                viewDetail(id);
+                                            }}
+                                            className={'action-button view-btn'}
+                                            title="查看详情"
+                                        />
+                                        <Button
+                                            type="text"
                                             icon={<EditOutlined />}
                                             onClick={(e) => {
+                                                e.preventDefault();
                                                 e.stopPropagation();
                                                 openModal({id, text, done});
                                             }}
@@ -100,6 +118,7 @@ const TodoList = () => {
                                             type="text"
                                             icon={<DeleteOutlined />}
                                             onClick={(e) => {
+                                                e.preventDefault();
                                                 e.stopPropagation();
                                                 deleteTodo(id);
                                             }}
