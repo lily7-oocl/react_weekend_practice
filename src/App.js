@@ -1,7 +1,7 @@
 import {useReducer} from "react";
 import './App.css';
 import {initialState, todoReducer} from "./reducers/todoReducer";
-import {createBrowserRouter, NavLink, Outlet, RouterProvider} from "react-router";
+import {createBrowserRouter, NavLink, Outlet, RouterProvider, useParams} from "react-router";
 import TodoList from "./components/TodoList";
 import {TodoContext} from "./contexts/TodoContext";
 
@@ -24,6 +24,10 @@ function  DefaultLayout(){
         <footer>footer copyright</footer>
     </>
 }
+function TodoDetail(){
+    const {key} = useParams();
+    return <h1>detail of {key}</h1>
+}
 const routes=[
     {
         path: '/',
@@ -37,6 +41,9 @@ const routes=[
         },{
             path: 'todoList',
             element: <TodoList/>
+        },{
+            path: 'todoList/:key',
+            element: <TodoDetail/>
         }]
     }
 ]
