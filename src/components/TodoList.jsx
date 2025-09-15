@@ -1,13 +1,15 @@
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {TodoContext} from "../contexts/TodoContext";
 import './TodoList.css';
-import {getTodos, updateTodos} from "../apis/api";
+import {deleteTodos, getTodos, updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {TodoGenerator} from "./TodoGenerator";
-import {DeleteTodoButton} from "./DeleteTodoButton";
+import {TodoModal} from "./TodoModal";
 
 const TodoList = () => {
     const {state, dispatch} = useContext(TodoContext)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTodo, setEditingTodo] = useState(null);
 
     async function toggleDone(id) {
         const oldTodo = state.find(todo => todo.id === id)
@@ -19,14 +21,31 @@ const TodoList = () => {
         dispatch(action)
     }
 
+    async function deleteTodo(id) {
+        await deleteTodos(id).then(message.success('更改成功'));
+        const action = {type: 'DELETE', id: id}
+        dispatch(action)
+    }
+
     useEffect(() => {
         getTodos().then(response => {
             dispatch({type: 'LOAD_TODOS', todos: response.data})
         })
     }, []);
 
+    function openModal(todo) {
+        setEditingTodo(todo);
+        setIsModalOpen(true);
+    }
+
     return (
         <div className={'todo-group'}>
+            <TodoModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                editingTodo={editingTodo}
+                setEditingTodo={setEditingTodo}
+            />
             <div>Todo List</div>
             {
                 state.length === 0 ? (
@@ -37,7 +56,8 @@ const TodoList = () => {
                             <div className={`todo-item ${done ? 'done' : ''}`}>
                                 <span onClick={() => toggleDone(id)}>{text}</span>
                             </div>
-                            <DeleteTodoButton id={id}/>
+                            <button className={'delete-button'} onClick={() => deleteTodo(id)}>X</button>
+                            <button className={'edit-button'} onClick={() => openModal({id, text, done})}>edit</button>
                         </div>
                     })
                 )
