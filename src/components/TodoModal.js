@@ -1,13 +1,16 @@
-import {Modal} from "antd";
+import {Modal, Input} from "antd";
 import {updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {useContext, useState, useEffect} from "react";
 import {TodoContext} from "../contexts/TodoContext";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router";
+import './TodoModal.css';
+
+const {TextArea} = Input;
 
 export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingTodo}) => {
     const [editText, setEditText] = useState('');
-    const {dispatch} = useContext(TodoContext)
+    const {dispatch} = useContext(TodoContext);
     const navigate = useNavigate();
 
     async function changeTextOfTodo() {
@@ -37,26 +40,29 @@ export const TodoModal = ({isModalOpen, setIsModalOpen, editingTodo, setEditingT
         }
     }, [editingTodo]);
 
-    return <Modal
-        title="编辑 Todo"
-        open={isModalOpen}
-        onOk={changeTextOfTodo}
-        onCancel={handleCancel}
-        okText="确认"
-        cancelText="取消"
-    >
-                <textarea
-                    value={editText}
-                    onChange={(e) => setEditText(e.target.value)}
-                    placeholder="请输入 todo 内容..."
-                    rows={4}
-                    style={{
-                        width: '100%',
-                        padding: '8px',
-                        borderRadius: '4px',
-                        border: '1px solid #d9d9d9',
-                        resize: 'vertical'
-                    }}
-                />
-    </Modal>
+    return (
+        <Modal
+            title="编辑待办事项"
+            open={isModalOpen}
+            onOk={changeTextOfTodo}
+            onCancel={handleCancel}
+            okText="确认修改"
+            cancelText="取消"
+            className={'todo-modal'}
+            centered
+            maskClosable={false}
+            width={480}
+        >
+            <TextArea
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                placeholder="请输入待办事项内容..."
+                rows={4}
+                className={'modal-textarea'}
+                maxLength={200}
+                showCount
+                autoFocus
+            />
+        </Modal>
+    )
 }
