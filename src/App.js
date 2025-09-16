@@ -6,6 +6,8 @@ import TodoList from "./components/TodoList";
 import {TodoContext} from "./contexts/TodoContext";
 import {DefaultLayout} from "./components/DefaultLayout";
 import {TodoDetail} from "./components/TodoDetail";
+import FinishedTodoList from "./components/FinishedTodoList";
+import {Card} from "antd";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +16,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <h1>Home Page</h1>,
+                element: <Card className={'todo-card '}><h1>欢迎大家给我投票 Heheh</h1></Card>,
             },
             {
                 path: 'todoList',
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'donePage',
-                element: <h1>Done Page</h1>,
+                element: <FinishedTodoList/>,
             }
         ]
     }

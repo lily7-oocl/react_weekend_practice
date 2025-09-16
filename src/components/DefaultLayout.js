@@ -19,18 +19,16 @@ const items = [{
     label: <NavLink to={'/todoList'}>待办清单</NavLink>,
     key: 'todoList',
     icon: <UnorderedListOutlined/>
-}, {
+},
+    {
+        label: <NavLink to={'/donePage'}>完成页面</NavLink>,
+        key: 'donePage',
+        icon: <CheckCircleOutlined />
+    },
+    {
     label: <NavLink to={'/about'}>关于</NavLink>,
     key: 'about',
     icon: <MonitorOutlined/>
-}, {
-    label: <NavLink to={'/errorPage'}>错误页面</NavLink>,
-    key: 'errorPage',
-    icon: <ExclamationCircleOutlined />
-}, {
-    label: <NavLink to={'/donePage'}>完成页面</NavLink>,
-    key: 'donePage',
-    icon: <CheckCircleOutlined />
 }]
 
 export function DefaultLayout() {

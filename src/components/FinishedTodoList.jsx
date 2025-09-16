@@ -4,14 +4,13 @@ import './TodoList.css';
 import {deleteTodos, getTodos, updateTodos} from "../apis/api";
 import message from "antd/es/message";
 import {useNavigate} from "react-router";
-import {TodoGenerator} from "./TodoGenerator";
 import {TodoModal} from "./TodoModal";
 import {Card, Button, Empty, Typography} from "antd";
 import {EditOutlined, DeleteOutlined, EyeOutlined} from "@ant-design/icons";
 
 const {Title} = Typography;
 
-const TodoList = () => {
+const FinishedTodoList = () => {
     const {state, dispatch} = useContext(TodoContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingTodo, setEditingTodo] = useState(null);
@@ -65,16 +64,16 @@ const TodoList = () => {
     return (
         <div className={'todo-container'}>
             <Card className={'todo-card'}>
-                <Title level={2} className={'todo-title'}>Todo List</Title>
+                <Title level={2} className={'todo-title'}>Finished Todo List</Title>
 
                 {state.length === 0 ? (
                     <Empty
-                        description="添加一些今天需要完成的事情..."
+                        description="已经完成的事情..."
                         className={'empty-state'}
                     />
                 ) : (
                     <div className={'todo-list'}>
-                        {state.filter(({done}) => {return !done}).map(({text, done, id}) => (
+                        {state.filter(({done}) => {return done}).map(({text, done, id}) => (
                             <Card
                                 key={id}
                                 className={`todo-item-card ${done ? 'done' : ''}`}
@@ -131,8 +130,6 @@ const TodoList = () => {
                         ))}
                     </div>
                 )}
-
-                <TodoGenerator/>
             </Card>
 
             <TodoModal
@@ -145,4 +142,4 @@ const TodoList = () => {
     )
 }
 
-export default TodoList
+export default FinishedTodoList
